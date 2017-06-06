@@ -19,7 +19,6 @@ function the_post_action()
   $queried_post=get_post($post_id);
   $title = $queried_post->post_title;
   html_form_code();
-  //echo "<h2>$title</h2>";
   $word=get_option(word);
   $word1=get_option(word1);
   $content = $queried_post->post_content;
