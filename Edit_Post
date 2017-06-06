@@ -1,0 +1,70 @@
+<?php
+    /*
+    Plugin Name: Editor
+    Plugin URI: http://www.abcd.com
+    Description: Edits Posts
+    Author: Aman
+    Version: 1.0
+    Author URI: http://www.abcd.com
+    */
+function add_menu()
+{
+  add_options_page("Edit Post Page", "Edit Post",4,"r", "the_post_action");
+
+}
+add_action("admin_menu","add_menu");
+function the_post_action()
+{
+  $post_id = 31;
+  $queried_post=get_post($post_id);
+  $title = $queried_post->post_title;
+  html_form_code();
+  //echo "<h2>$title</h2>";
+  $word=get_option(word);
+  $word1=get_option(word1);
+  $content = $queried_post->post_content;
+  //add_option('word1','1106','','yes');
+
+  $content=str_replace($word,$word1,$content);
+  //echo $content;
+  //echo $word;
+  //echo $word1;
+}
+function html_form_code()
+{
+$post_id=31;
+$queried_post=get_post($post_id);
+echo '<form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
+echo '<p>';
+echo 'Word to be replaced(Required)<br/>';
+echo '<input type="text" name="cf-name" " value="' . ( isset( $_POST["cf-name"] ) ? esc_attr( $_POST["cf-name"] ) : '' ) . '" size="10" />';
+//add_option('word',$_POST['value']);
+//update_option('word',$_POST['value']);
+if(isset($_POST["cf-name"]))
+$word=$_POST["cf-name"];
+echo '</p>';
+echo '<p>';
+echo 'Replacement Word(Required)<br/>';
+echo '<input type="text" name="f-name" " value="' . ( isset( $_POST["f-name"] ) ? esc_attr( $_POST["f-name"] ) : '' ) . '" size="10" />';
+//add_option('word1',$_POST['value']);
+//update_option('word1',$_POST['value']);
+if(isset($_POST["f-name"]))
+$word1=$_POST["f-name"];
+echo '</p>';
+echo '<p>';
+echo '<p><input type="submit" name="cf-submitted" value="Replace"></p>';
+echo '</form>';
+//echo $word;
+//echo $word1;
+echo "<h2>$queried_post->post_title</h2>";
+$queried_post->post_content=str_ireplace($word,$word1,$queried_post->post_content);
+echo $queried_post->post_content;
+wp_update_post($queried_post);
+/*$word=get_option(word);
+$word1=get_option(word1);
+$content=str_replace("1234",$word1,$content);
+echo $content;*/
+}
+//add_action( 'the_post', 'the_post_action' );
+//add_action('save_post', 'my_function');
+?>
