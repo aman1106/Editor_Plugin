@@ -22,8 +22,6 @@ function the_post_action()
   $word=get_option(word);
   $word1=get_option(word1);
   $content = $queried_post->post_content;
-  //add_option('word1','1106','','yes');
-
   $content=str_replace($word,$word1,$content);
   //echo $content;
   //echo $word;
